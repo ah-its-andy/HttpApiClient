@@ -1,11 +1,13 @@
 package io.standardcore.http;
 
 public class HttpInternalException extends RuntimeException {
-    public HttpInternalException(String message){
-        super(message);
+    private final ApiResponse response;
+
+    public HttpInternalException(ApiResponse response){
+        this.response = response;
     }
 
-    public HttpInternalException(String message, Throwable innerException){
-        super(message, innerException);
+    public ApiResponse getResponse() {
+        return response;
     }
 }
