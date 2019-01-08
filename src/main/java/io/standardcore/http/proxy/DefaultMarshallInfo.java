@@ -14,6 +14,7 @@ public class DefaultMarshallInfo implements MarshallInfo {
     private String serviceHost;
     private String serviceUrl;
     private String method;
+    private String contentType;
     private Object payload;
     private NameValueCollection<String, Object> headers;
     private NameValueCollection<String, Object> queryStrings;
@@ -60,6 +61,10 @@ public class DefaultMarshallInfo implements MarshallInfo {
         this.invokingMethod = invokingMethod;
     }
 
+    protected void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     @Override
     public String serviceHost() {
         return serviceHost;
@@ -73,6 +78,11 @@ public class DefaultMarshallInfo implements MarshallInfo {
     @Override
     public String method() {
         return method;
+    }
+
+    @Override
+    public String contentType() {
+        return contentType;
     }
 
     @Override

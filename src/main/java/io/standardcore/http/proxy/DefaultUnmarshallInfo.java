@@ -6,11 +6,13 @@ import io.standardcore.http.Unmarshaller;
 import io.standardcore.http.collection.NameValueCollection;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class DefaultUnmarshallInfo implements UnmarshallInfo {
     private int statusCode;
+    private String contentType;
     private byte[] payload;
     private NameValueCollection<String, String> headers;
     private List<UnmarshallWare> unmarshallWares;
@@ -51,15 +53,25 @@ public class DefaultUnmarshallInfo implements UnmarshallInfo {
         this.returningType = returningType;
     }
 
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     @Override
     public int statusCode() {
         return statusCode;
     }
 
     @Override
-    public byte[] payload() {
-        return payload;
+    public String contentType() {
+        return contentType;
     }
+
+    @Override
+    public byte[] payload() {
+        return Arrays.copyOf(payload, payload.length);
+    }
+
 
     @Override
     public NameValueCollection<String, String> headers() {

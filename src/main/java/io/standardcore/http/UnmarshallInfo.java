@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface UnmarshallInfo {
     int statusCode();
+    String contentType();
     byte[] payload();
     NameValueCollection<String, String> headers();
     List<UnmarshallWare> unmarshallWares();

@@ -1,11 +1,9 @@
 package io.standardcore.http.collection;
 
 public class KeyValuePair<TName, TValue> {
-    public KeyValuePair(){
-
-    }
-
     public KeyValuePair(TName name, TValue value) {
+        if(name == null) throw new IllegalArgumentException("name");
+        if(value == null) throw new IllegalArgumentException("value");
         this.name = name;
         this.value = value;
     }
@@ -16,16 +14,15 @@ public class KeyValuePair<TName, TValue> {
     public TName getName() {
         return name;
     }
-
-    public void setName(TName name) {
-        this.name = name;
-    }
-
     public TValue getValue() {
         return value;
     }
 
-    public void setValue(TValue value) {
-        this.value = value;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(!(obj instanceof KeyValuePair)) return false;
+        KeyValuePair<TName, TValue> right = (KeyValuePair<TName, TValue>)obj;
+        return name.equals(right.getName()) && value.equals(right.getValue());
     }
 }

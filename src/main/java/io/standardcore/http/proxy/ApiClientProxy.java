@@ -43,9 +43,11 @@ public class ApiClientProxy implements MethodInterceptor {
         } else if(annotation instanceof HttpPost){
             marshallInfo.setServiceUrl(((HttpPost) annotation).value());
             marshallInfo.setMethod("POST");
+            marshallInfo.setContentType(((HttpPost) annotation).contentType());
         } else if(annotation instanceof HttpPut){
             marshallInfo.setServiceUrl(((HttpPut) annotation).value());
             marshallInfo.setMethod("PUT");
+            marshallInfo.setContentType(((HttpPut) annotation).contentType());
         } else {
             marshallInfo.setServiceUrl(((HttpDelete) annotation).value());
             marshallInfo.setMethod("DELETE");
@@ -82,18 +84,16 @@ public class ApiClientProxy implements MethodInterceptor {
 
             FromHeader fromHeader = parameter.getDeclaredAnnotation(FromHeader.class);
             if(fromHeader != null){
-                KeyValuePair<String, Object> header = new KeyValuePair<>();
-                header.setName(StringUtils.isEmpty(fromHeader.value()) ? parameter.getName() : fromHeader.value());
-                header.setValue(args[i]);
+                KeyValuePair<String, Object> header
+                        = new KeyValuePair<>(StringUtils.isEmpty(fromHeader.value()) ? parameter.getName() : fromHeader.value(), args[i]);
                 marshallInfo.headers().add(header);
                 continue;
             }
             FromQuery fromQuery = parameter.getDeclaredAnnotation(FromQuery.class);
             if(fromQuery != null){
-                KeyValuePair<String, Object> querystring = new KeyValuePair<>();
-                querystring.setValue(args[i]);
-                querystring.setName(StringUtils.isEmpty(fromQuery.value()) ? parameter.getName() : fromQuery.value());
-                marshallInfo.headers().add(querystring);
+                KeyValuePair<String, Object> querystring
+                        = new KeyValuePair<>(StringUtils.isEmpty(fromQuery.value()) ? parameter.getName() : fromQuery.value(),args[i]);
+                marshallInfo.queryStrings().add(querystring);
                 continue;
             }
             FromBody fromBody = parameter.getDeclaredAnnotation(FromBody.class);
@@ -128,7 +128,7 @@ public class ApiClientProxy implements MethodInterceptor {
 
     private Object createInstance(Class<?> type){
         try {
-            Constructor<?> ctor = type.getConstructor(null);
+            Constructor<?> ctor = type.getConstructor();
             return ctor.newInstance();
         } catch (Exception e) { throw new RuntimeException(e); }
     }

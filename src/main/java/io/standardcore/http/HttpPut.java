@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HttpPut {
     String value();
+    String contentType() default "application/json";
 }

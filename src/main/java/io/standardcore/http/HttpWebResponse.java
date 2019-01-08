@@ -2,6 +2,8 @@ package io.standardcore.http;
 
 import io.standardcore.http.collection.NameValueCollection;
 
+import java.util.Arrays;
+
 public class HttpWebResponse {
     private final static byte[] EMPTY_BINARY = new byte[0];
 
@@ -23,7 +25,11 @@ public class HttpWebResponse {
     }
 
     public byte[] getBody() {
-        return body;
+        return Arrays.copyOf(body, body.length);
+    }
+
+    public String getContentType() {
+        return headers.firstValueOrDefault("content-type", "application/json");
     }
 
     public NameValueCollection<String, String> getHeaders() {

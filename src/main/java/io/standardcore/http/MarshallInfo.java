@@ -9,6 +9,7 @@ public interface MarshallInfo {
     String serviceHost();
     String serviceUrl();
     String method();
+    String contentType();
     Object payload();
     NameValueCollection<String, Object> headers();
     NameValueCollection<String, Object> queryStrings();
