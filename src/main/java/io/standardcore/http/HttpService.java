@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HttpService {
     String value();
+    boolean https() default true;
+    int port() default 80;
 }

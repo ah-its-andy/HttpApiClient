@@ -9,13 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.AnnotationTypeMismatchException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ApiClientProxy implements MethodInterceptor {
@@ -86,14 +84,14 @@ public class ApiClientProxy implements MethodInterceptor {
             if(fromHeader != null){
                 KeyValuePair<String, Object> header
                         = new KeyValuePair<>(StringUtils.isEmpty(fromHeader.value()) ? parameter.getName() : fromHeader.value(), args[i]);
-                marshallInfo.headers().add(header);
+                marshallInfo.getHeaders().add(header);
                 continue;
             }
             FromQuery fromQuery = parameter.getDeclaredAnnotation(FromQuery.class);
             if(fromQuery != null){
                 KeyValuePair<String, Object> querystring
                         = new KeyValuePair<>(StringUtils.isEmpty(fromQuery.value()) ? parameter.getName() : fromQuery.value(),args[i]);
-                marshallInfo.queryStrings().add(querystring);
+                marshallInfo.getQueryStrings().add(querystring);
                 continue;
             }
             FromBody fromBody = parameter.getDeclaredAnnotation(FromBody.class);

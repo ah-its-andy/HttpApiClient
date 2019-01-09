@@ -11,7 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DefaultMarshallInfo implements MarshallInfo {
+    private String httpSchema;
     private String serviceHost;
+    private int port;
     private String serviceUrl;
     private String method;
     private String contentType;
@@ -27,6 +29,14 @@ public class DefaultMarshallInfo implements MarshallInfo {
         headers = new NameValueCollection<>();
         queryStrings = new NameValueCollection<>();
         marshallWares = new LinkedList<>();
+    }
+
+    protected void setHttpSchema(String httpSchema) {
+        this.httpSchema = httpSchema;
+    }
+
+    protected void setPort(int port) {
+        this.port = port;
     }
 
     protected void setServiceHost(String serviceHost) {
@@ -66,57 +76,67 @@ public class DefaultMarshallInfo implements MarshallInfo {
     }
 
     @Override
-    public String serviceHost() {
+    public String getHttpSchema() {
+        return httpSchema;
+    }
+
+    @Override
+    public String getServiceHost() {
         return serviceHost;
     }
 
     @Override
-    public String serviceUrl() {
+    public int getPort() {
+        return port;
+    }
+
+    @Override
+    public String getServiceUrl() {
         return serviceUrl;
     }
 
     @Override
-    public String method() {
+    public String getMethod() {
         return method;
     }
 
     @Override
-    public String contentType() {
+    public String getContentType() {
         return contentType;
     }
 
     @Override
-    public Object payload() {
+    public Object getPayload() {
         return payload;
     }
 
     @Override
-    public NameValueCollection<String, Object> headers() {
+    public NameValueCollection<String, Object> getHeaders() {
         return headers;
     }
 
     @Override
-    public NameValueCollection<String, Object> queryStrings() {
+    public NameValueCollection<String, Object> getQueryStrings() {
         return queryStrings;
     }
 
     @Override
-    public List<MarshallWare> marshallWares() {
+    public List<MarshallWare> getMarshallWares() {
         return Collections.unmodifiableList(marshallWares);
     }
 
     @Override
-    public Marshaller marshaller() {
+    public Marshaller getMarshaller() {
         return marshaller;
     }
 
     @Override
-    public Class<?> httpServiceType() {
+    public Class<?> getHttpServiceType() {
         return httpServiceType;
     }
 
     @Override
-    public Method invokingMethod() {
+    public Method getInvokingMethod() {
         return invokingMethod;
     }
 }

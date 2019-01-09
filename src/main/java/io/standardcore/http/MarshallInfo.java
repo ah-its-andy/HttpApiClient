@@ -6,19 +6,21 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public interface MarshallInfo {
-    String serviceHost();
-    String serviceUrl();
-    String method();
-    String contentType();
-    Object payload();
-    NameValueCollection<String, Object> headers();
-    NameValueCollection<String, Object> queryStrings();
-    List<MarshallWare> marshallWares();
-    Marshaller marshaller();
-    Class<?> httpServiceType();
-    Method invokingMethod();
+    String getHttpSchema();
+    String getServiceHost();
+    int getPort();
+    String getServiceUrl();
+    String getMethod();
+    String getContentType();
+    Object getPayload();
+    NameValueCollection<String, Object> getHeaders();
+    NameValueCollection<String, Object> getQueryStrings();
+    List<MarshallWare> getMarshallWares();
+    Marshaller getMarshaller();
+    Class<?> getHttpServiceType();
+    Method getInvokingMethod();
 
     default ApiRequest marshall(){
-        return marshaller().marshall(this);
+        return getMarshaller().marshall(this);
     }
 }

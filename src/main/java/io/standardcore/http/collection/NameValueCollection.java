@@ -15,6 +15,10 @@ public class NameValueCollection<TName, TValue> implements Iterable<KeyValuePair
         names = new LinkedHashSet<>();
     }
 
+    public Set<TName> getNames(){
+        return Collections.unmodifiableSet(names);
+    }
+
     public boolean containsName(TName name){
         return names.stream().anyMatch(x->x.equals(normalizeName(name)));
     }
